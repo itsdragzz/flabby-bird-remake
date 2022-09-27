@@ -10,13 +10,12 @@ class Player():
         # pygame.sprite.Sprite.__init__(self)
 
 
-
-
-
-        self.image = pygame.image.load("src/graphics/bird.png").convert()
+        self.image = pygame.image.load("src/graphics/bird.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (1280, 720))
         self.rect = self.image.get_rect(topleft = (0, 0))
-        self.image_resize = pygame.transform.scale(self.image, (1280, 720))
-        code.Display(self.image, self.rect)
+
+
+        code.Display(screen, self.image, self.rect)
 
             
 
@@ -26,4 +25,4 @@ class Player():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         pass
-
+    
