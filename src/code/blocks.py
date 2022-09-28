@@ -1,18 +1,34 @@
-import pygame, code
-from random import randint
-
-class Blocks(pygame.sprite.Sprite):
-    def __init__(self, screen):
-
-        self.x_coord = 1000
-        self.y_coord = 700
-
-        # Creating image for the block and then scale it
-        self.image = pygame.image.load("src/graphics/pole.png").convert_alpha()
-        self.image = pygame.transform.scale(self.image, (200, 700))
-
-        # Creating rectangles for images (for placement)
-        self.rect = self.image.get_rect(center = (self.x_coord,self.y_coord))
+import pygame
+from random import randint, seed
+from datetime import datetime
 
 
-        code.Display(screen, self.image, self.rect)
+class Top_Block(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.count = 1
+        image = pygame.image.load("src/graphics/pole.png").convert_alpha()
+        image = pygame.transform.scale(image, (150, 500))
+        self.image = pygame.transform.rotozoom(image, 180, 1)
+
+        self.rect = self.image.get_rect(bottomleft = (500, self.x()))
+    
+    def x(self):
+        seed(self.count)
+        self.x_coord = randint(100, 400)
+        self.count += 1
+        return(self.x_coord)
+
+class Bottom_Block(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.image_gap = 100
+        a = Top_Block()
+        self.x_coord = a.x()
+
+        image = pygame.image.load("src/graphics/pole.png").convert_alpha()
+        self.image = pygame.transform.scale(image, (150, 500))
+        
+        self.rect = self.image.get_rect(topleft = (500, self.x_coord + self.image_gap))
