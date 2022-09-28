@@ -1,34 +1,24 @@
 import pygame
-from random import randint, seed
-from datetime import datetime
 
-
-class Top_Block(pygame.sprite.Sprite):
-    def __init__(self):
+class Block(pygame.sprite.Sprite):
+    def __init__(self, x, y, pos):
         super().__init__()
 
-        self.count = 1
-        image = pygame.image.load("src/graphics/pole.png").convert_alpha()
-        image = pygame.transform.scale(image, (150, 500))
-        self.image = pygame.transform.rotozoom(image, 180, 1)
-
-        self.rect = self.image.get_rect(bottomleft = (500, self.x()))
-    
-    def x(self):
-        seed(self.count)
-        self.x_coord = randint(100, 400)
-        self.count += 1
-        return(self.x_coord)
-
-class Bottom_Block(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-
-        self.image_gap = 100
-        a = Top_Block()
-        self.x_coord = a.x()
-
-        image = pygame.image.load("src/graphics/pole.png").convert_alpha()
-        self.image = pygame.transform.scale(image, (150, 500))
+        self.pipe_gap = 150
+        self.image = pygame.image.load("src/graphics/pole.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (150, 500))
         
-        self.rect = self.image.get_rect(topleft = (500, self.x_coord + self.image_gap))
+        # position 1 is from the top, -1 is from the bottom
+        if (pos == 1):
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect = self.image.get_rect(bottomleft = (x, y - int(self.pipe_gap/2)))
+        else:
+            self.rect = self.image.get_rect(topleft = (x, y + int(self.pipe_gap/2)))
+    
+    def destroy(self):
+        if (self.rect.right < 0):
+            self.kill()
+
+    def update(self):
+        self.rect.x -= 1
+        self.destroy()
