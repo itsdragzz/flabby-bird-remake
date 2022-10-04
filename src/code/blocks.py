@@ -17,8 +17,8 @@ class Block(pygame.sprite.Sprite):
     
     def destroy(self):
         if (self.rect.right < 0):
-            self.kill()
+            self.kill() #kills kevin
 
     def update(self):
-        self.rect.x -= 1
+        self.rect.x -= 10 #speed of block
         self.destroy()

@@ -3,7 +3,11 @@ import pygame, sys, code, random
 def run():
     pygame.init()
 
+
+    clock = pygame.time.Clock()
+
     # Obstacle timer, spawns a new pipe column every second
+
     obstacle_timer = pygame.USEREVENT + 1
     pygame.time.set_timer(obstacle_timer, 1000)
 
@@ -34,6 +38,12 @@ def run():
 
         pygame.display.update()
 
+        clock.tick(60)
+
+
+    
+
 
 if __name__ == '__main__':
+    
     run()
